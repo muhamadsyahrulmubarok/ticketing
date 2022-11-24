@@ -129,7 +129,7 @@
 									</style>
 									<div class="form-group">
 										<label>Berita Acara</label>
-										<input type="file" name="berita_acara" class="berita_acara" accept=".pdf,.docx" />
+										<input type="file" name="berita_acara" class="berita_acara" accept=".pdf,.docx" required />
 									</div>
 									<div class="form-group">
 										<label>Lampiran</label>

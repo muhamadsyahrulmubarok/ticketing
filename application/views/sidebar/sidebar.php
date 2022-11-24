@@ -12,11 +12,7 @@
 					</svg> New Ticket</a></li>
 			<li><a href="<?php echo base_url(); ?>list_ticket/ticket_list"><svg class="glyph stroked notepad ">
 						<use xlink:href="#stroked-notepad" />
-					</svg> List Ticket (<?php if (empty($notif_approval)) {
-											echo "0";
-										} else {
-											echo $notif_list_ticket;
-										} ?>)</a></li>
+					</svg> List Ticket</a></li>
 			<li><a href="<?php echo base_url(); ?>approval/approval_list"><svg class="glyph stroked email">
 						<use xlink:href="#stroked-email" />
 					</svg>
