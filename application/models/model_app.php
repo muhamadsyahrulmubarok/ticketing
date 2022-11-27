@@ -91,7 +91,7 @@ class Model_app extends CI_Model
     {
         $id_dept = $this->session->userdata('id_dept');
         $level = $this->session->userdata('level');
-        if ($level == "ADMIN") {
+        if ($level == "ADMIN" || $level == "SKAI") {
             $query = $this->db->query("SELECT D.nama, F.nama_dept, A.status, A.id_ticket, A.tanggal, B.nama_sub_kategori, C.nama_kategori, A.berita_acara
                                    FROM ticket A 
                                    LEFT JOIN sub_kategori B ON B.id_sub_kategori = A.id_sub_kategori
@@ -194,11 +194,19 @@ class Model_app extends CI_Model
 
     public function datateknisi()
     {
-        $query = $this->db->query('SELECT A.point, A.id_teknisi, B.nama, B.jk, C.nama_kategori, A.status, A.point FROM teknisi A 
+        $level = $this->session->userdata('level');
+        $nik = $this->session->userdata('id_user');
+        if ($level == "ADMIN") {
+            $query = $this->db->query('SELECT A.point, A.id_teknisi, B.nama, B.jk, C.nama_kategori, A.status, A.point FROM teknisi A 
                                 LEFT JOIN karyawan B ON B.nik = A.nik
                                 LEFT JOIN kategori C ON C.id_kategori = A.id_kategori
-                                
                                  ');
+        } else {
+            $query = $this->db->query("SELECT A.point, A.id_teknisi, B.nama, B.jk, C.nama_kategori, A.status, A.point FROM teknisi A 
+                                LEFT JOIN karyawan B ON B.nik = A.nik
+                                LEFT JOIN kategori C ON C.id_kategori = A.id_kategori
+                                WHERE A.nik = '" . $nik . "'");
+        }
         return $query->result();
     }
 
@@ -287,7 +295,10 @@ class Model_app extends CI_Model
 
         $value[''] = '-- PILIH --';
         foreach ($query->result() as $row) {
-            $value[$row->nik] = $row->nama;
+            $user = $this->db->query("SELECT * FROM user WHERE id_karyawan = '$row->nik'")->num_rows();
+            if ($user == 0) {
+                $value[$row->nik] = $row->nama;
+            }
         }
         return $value;
     }
@@ -370,6 +381,7 @@ class Model_app extends CI_Model
     {
         $value[''] = '--PILIH--';
         $value['ADMIN'] = 'ADMIN';
+        $value['SKAI'] = 'SKAI';
         $value['TEKNISI'] = 'TEKNISI';
         $value['MO/KC'] = 'MO/KC';
         $value['USER'] = 'USER';

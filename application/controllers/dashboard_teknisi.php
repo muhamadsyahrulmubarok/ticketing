@@ -1,28 +1,28 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard_teknisi extends CI_Controller {
+class Dashboard_teknisi extends CI_Controller
+{
 
-function __construct(){
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('model_app');
 
-        if(!$this->session->userdata('id_user'))
-       {
-        $this->session->set_flashdata("msg", "<div class='alert alert-info'>
+        if (!$this->session->userdata('id_user')) {
+            $this->session->set_flashdata("msg", "<div class='alert alert-info'>
        <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
        <strong><span class='glyphicon glyphicon-remove-sign'></span></strong> Silahkan login terlebih dahulu.
        </div>");
-        redirect('login');
+            redirect('login');
         }
-        
     }
 
 
- function teknisi_view()
- {
+    function teknisi_view()
+    {
 
- 	    $data['header'] = "header/header";
+        $data['header'] = "header/header";
         $data['navbar'] = "navbar/navbar";
         $data['sidebar'] = "sidebar/sidebar";
         $data['body'] = "body/dashboard_teknisi";
@@ -52,18 +52,17 @@ function __construct(){
         $data['notif_assignment'] = $row_assignmentticket->jml_assignment_ticket;
 
         //end notification
-        
+
         $data['link'] = "teknisi/hapus";
 
         $datateknisi = $this->model_app->datateknisi();
-	    $data['datateknisi'] = $datateknisi;
-        
+        $data['datateknisi'] = $datateknisi;
+
         $this->load->view('template', $data);
+    }
 
- }
-
- function report_teknisi($id)
- {
+    function report_teknisi($id)
+    {
 
         $data['header'] = "header/header";
         $data['navbar'] = "navbar/navbar";
@@ -98,43 +97,34 @@ function __construct(){
 
         $data['link'] = "teknisi/hapus";
 
-         $data['id_teknisi'] = $id;
+        $data['id_teknisi'] = $id;
 
         $datareportteknisi = $this->model_app->datareportteknisi($id);
         $data['datareportteknisi'] = $datareportteknisi;
-        
+
         $this->load->view('template', $data);
+    }
 
- }
-
- public function pdfreportteknisi($id)
+    public function pdfreportteknisi($id)
     {
-    
-   
-     $datareportteknisi = $this->model_app->datareportteknisi($id);
-     $data['datareportteknisi'] = $datareportteknisi;
-    
-    
-    ob_start();
-        $content = $this->load->view('body/pdfreportteknisi',$data);
-        $content = ob_get_clean();      
+
+
+        $datareportteknisi = $this->model_app->datareportteknisi($id);
+        $data['datareportteknisi'] = $datareportteknisi;
+
+
+        ob_start();
+        $content = $this->load->view('body/pdfreportteknisi', $data);
+        $content = ob_get_clean();
         $this->load->library('html2pdf');
-        try
-        {
+        try {
             $html2pdf = new HTML2PDF('L', 'A4', 'en');
             $html2pdf->pdf->SetDisplayMode('fullpage');
             $html2pdf->writeHTML($content, isset($_GET['vuehtml']));
             $html2pdf->Output('Report_ppic.pdf');
-        }
-        catch(HTML2PDF_exception $e) {
+        } catch (HTML2PDF_exception $e) {
             echo $e;
             exit;
         }
-    
     }
-
- 
-
-
-    
 }

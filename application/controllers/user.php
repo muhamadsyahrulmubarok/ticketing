@@ -107,7 +107,7 @@ class User extends CI_Controller
 
 		$id_karyawan = strtoupper(trim($this->input->post('id_karyawan')));
 		$username = trim($this->input->post('username'));
-		$password = strtoupper(trim($this->input->post('password')));
+		$password = $this->input->post('password');
 		$id_level = strtoupper(trim($this->input->post('id_level')));
 
 
