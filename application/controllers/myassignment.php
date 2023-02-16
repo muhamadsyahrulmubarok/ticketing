@@ -172,7 +172,7 @@ class Myassignment extends CI_Controller
 
         $id_kategori = $row->id_kategori;
 
-        $data['url'] = "Myassignment/up_progress";
+        $data['url'] = "myassignment/up_progress";
 
         $data['dd_teknisi'] = $this->model_app->dropdown_teknisi($id_kategori);
         $data['id_teknisi'] = "";
