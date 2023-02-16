@@ -289,7 +289,7 @@ class Model_app extends CI_Model
     {
         $sql = "SELECT A.nama, A.nik FROM karyawan as  A 
                 LEFT JOIN bagian_departemen as B ON B.id_bagian_dept = A.id_bagian_dept
-                LEFT JOIN departemen C ON C.id_dept = b.id_dept 
+                LEFT JOIN departemen C ON C.id_dept = B.id_dept 
                 ORDER BY nama";
         $query = $this->db->query($sql);
 
