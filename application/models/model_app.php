@@ -263,7 +263,7 @@ class Model_app extends CI_Model
 
     public function dropdown_departemen()
     {
-        $sql = "SELECT * FROM Departemen ORDER BY nama_dept";
+        $sql = "SELECT * FROM departemen ORDER BY nama_dept";
         $query = $this->db->query($sql);
 
         $value[''] = '-- PILIH --';
